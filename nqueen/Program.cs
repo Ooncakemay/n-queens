@@ -4,42 +4,69 @@ namespace ConsoleApplication1
 {
     internal class Program
     {
-        private static int count = 0;
+        private static int _count = 0;
         public static void Main(string[] args)
         {
-            var number = 4;
+            const int number = 8;
         
-            int[,] array = new int[number, number];
-          
-        
-            printAll(number,array);
+            var array = new int[number, number];
+            Backtracking(number,array);
 
         }
-
-        private static void printAll(int number,int[,] array){
+        
+        
+        private static void Backtracking(int number,int[,] checkerboard){
             if(number > 0){
-                for(var i = 0; i < array.GetLength(0) ; i++)
+                for(var i = 0; i < checkerboard.GetLength(0) ; i++)
                 {
-                    array[i,number-1] = 1;
-                    printAll(number-1,array);
-                    array[i,number-1] = 0;
+                    if (ForwardChecking(i, number - 1, checkerboard))
+                    {
+                        checkerboard[i,number-1] = 1;
+                        Backtracking(number-1,checkerboard);
+                        checkerboard[i,number-1] = 0;
+                    }
                 }
             
             }else
             {
-                count++;
-                Console.WriteLine("第:" + count+"個");
-                for(var i = 0; i < array.GetLength(0) ;i++)
+                _count++;
+                Console.WriteLine("第:" + _count+"個");
+                for(var i = 0; i < checkerboard.GetLength(0) ;i++)
                 {
-                    for(var j=0;j < array.GetLength(1);j++)
+                    for(var j=0;j < checkerboard.GetLength(1);j++)
                     {
-                        Console.Write( array[i, j]);
+                        Console.Write(checkerboard[i, j] == 0 ? "." : "Q");
                     }
                     Console.WriteLine ();
                 }
                 Console.WriteLine ();
             
             }
+        }
+
+        private static bool ForwardChecking(int i, int j, int[,] checkerboard)
+        {
+            var length = checkerboard.GetLength(0);
+            int s, t;
+            for(s=i,t=0; t<length; t++)
+                if(checkerboard[s,t]==1 && t!=j)
+                    return false;//判斷行
+            for(t=j,s=0; s<length; s++)
+                if(checkerboard[s,t]==1 && s!=i)
+                    return false;//判斷列
+            for(s=i-1,t=j-1; s>=0&&t>=0; s--,t--)
+                if(checkerboard[s,t]==1)
+                    return false;//判斷左上方
+            for(s=i+1,t=j+1; s<length&&t<length;s++,t++)
+                if(checkerboard[s,t]==1)
+                    return false;//判斷右下方
+            for(s=i-1,t=j+1; s>=0&&t<length; s--,t++)
+                if(checkerboard[s,t]==1)
+                    return false;//判斷右上方
+            for(s=i+1,t=j-1; s<length&&t>=0; s++,t--)
+                if(checkerboard[s,t]==1)
+                    return false;//判斷左下方
+            return true;//否則返回
         }
     }
 }
