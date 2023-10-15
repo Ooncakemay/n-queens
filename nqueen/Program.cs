@@ -48,8 +48,6 @@ namespace ConsoleApplication1
         {
             checkerboard[col, row] = 1;
 
-            var length = checkerboard.GetLength(0);
-
             SetConflict(col, row, conflictMap, 1);
         }
 
