@@ -8,10 +8,10 @@ namespace ConsoleApplication1
 
         public static void Main(string[] args)
         {
-            const int number = 8;
+            const int number = 3;
             var conflictMap = new int[number, number];
-            var array = new int[number, number];
-            NQueen(number, array, conflictMap);
+            var checkerboard = new int[number, number];
+            NQueen(number, checkerboard, conflictMap);
         }
 
 
