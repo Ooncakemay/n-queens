@@ -6,9 +6,9 @@ namespace ConsoleApplication1
     {
         private static int _count = 0;
 
-        public static void Main(string[] args)
+        public static void Main()
         {
-            const int number = 3;
+            const int number = 8;
             var conflictMap = new int[number, number];
             var checkerboard = new int[number, number];
             NQueen(number, checkerboard, conflictMap);
