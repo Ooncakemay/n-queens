@@ -11,6 +11,7 @@ namespace ConsoleApplication1
         public static void Main(string[] args)
         {
             const int number = 8;
+            var conflictArray = new int[number, number];
             var array = new int[number, number];
             NQueen(number, array);
         }
@@ -68,20 +69,21 @@ namespace ConsoleApplication1
 
         private static bool IsCorrect(int col, int row, int[,] checkerboard)
         {
-            var length = checkerboard.GetLength(0);
+            var length = checkerboard.GetLength(0);//左邊
+            
             for (int i = row; i < length; i++)
             {
                 if (checkerboard[col, i] == 1)
                     return false;
             }
             
-            for (int i = col, j = row; i >=0  && j < length; i--, j++)
+            for (int i = col, j = row; i >=0  && j < length; i--, j++)// 左上
             {
                 if (checkerboard[i, j] == 1)
                     return false;
             }
             
-            for (int i = col, j = row; i < length && j < length; i++, j++)
+            for (int i = col, j = row; i < length && j < length; i++, j++)// 左下
             {
                 if (checkerboard[i, j] == 1)
                     return false;
