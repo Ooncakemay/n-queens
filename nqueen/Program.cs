@@ -11,24 +11,24 @@ namespace ConsoleApplication1
         public static void Main(string[] args)
         {
             const int number = 8;
-            var conflictArray = new int[number, number];
+            var conflictMap = new int[number, number];
             var array = new int[number, number];
-            NQueen(number, array);
+            NQueen(number, array,conflictMap);
         }
 
 
-        private static void NQueen(int number, int[,] checkerboard)
+        private static void NQueen(int number, int[,] checkerboard,int [,] conflictMap )
         {
             
             if (number > 0)
             {
                 for (var i = 0; i < checkerboard.GetLength(0); i++)
                 {
-                    if (IsCorrect(i, number-1, checkerboard))
+                    if (IsCorrect(i,number-1 , conflictMap))
                     {
-                        checkerboard[i, number - 1] = 1;
-                        NQueen(number - 1, checkerboard);
-                        checkerboard[i, number - 1] = 0;
+                        PlaceQueen(i,number-1,checkerboard,conflictMap);
+                        NQueen(number - 1, checkerboard,conflictMap);
+                        RemoveQueen(i, number-1, checkerboard,conflictMap);
                     }
                 }
             }
@@ -36,6 +36,44 @@ namespace ConsoleApplication1
             {
                 _count++;
                 PrintBoard(checkerboard,_count);
+            }
+        }
+
+        private static void RemoveQueen(int col, int row, int[,] checkerboard,int [,] conflictMap)
+        {
+            checkerboard[col, row] = 0;
+
+            SetConflict(col, row, conflictMap,-1);
+        }
+
+        
+        private static void PlaceQueen(int col, int row, int[,] checkerboard,int [,] conflictMap)
+        {
+          
+            checkerboard[col, row] = 1;
+            
+            var length = checkerboard.GetLength(0);
+            
+            SetConflict(col, row, conflictMap,1);
+        }
+        
+        private static void SetConflict(int col, int row, int[,] conflictMap,int addVlue)
+        {
+            var length = conflictMap.GetLength(0);
+
+            for (int i = row; i >= 0; i--)
+            {
+                conflictMap[col, i] += addVlue;
+            }
+
+            for (int i = col + 1, j = row - 1; i < length && j >= 0; i++, j--) 
+            {
+                conflictMap[i, j]+= addVlue;
+            }
+
+            for (int i = col - 1, j = row - 1; i >= 0 && j >= 0; i--, j--) 
+            {
+                conflictMap[i, j]+= addVlue;
             }
         }
 
@@ -69,27 +107,9 @@ namespace ConsoleApplication1
 
         private static bool IsCorrect(int col, int row, int[,] checkerboard)
         {
-            var length = checkerboard.GetLength(0);//左邊
-            
-            for (int i = row; i < length; i++)
-            {
-                if (checkerboard[col, i] == 1)
-                    return false;
-            }
-            
-            for (int i = col, j = row; i >=0  && j < length; i--, j++)// 左上
-            {
-                if (checkerboard[i, j] == 1)
-                    return false;
-            }
-            
-            for (int i = col, j = row; i < length && j < length; i++, j++)// 左下
-            {
-                if (checkerboard[i, j] == 1)
-                    return false;
-            }
-
-            return true;
+            return checkerboard[col, row] == 0;
         }
+       
+        
     }
 }
