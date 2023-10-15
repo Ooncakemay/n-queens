@@ -101,9 +101,9 @@ namespace ConsoleApplication1
          7  .......Q
         */
 
-        private static bool IsCorrect(int col, int row, int[,] checkerboard)
+        private static bool IsCorrect(int col, int row, int[,] conflictMap)
         {
-            return checkerboard[col, row] == 0;
+            return conflictMap[col, row] == 0;
         }
     }
 }
