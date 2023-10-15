@@ -18,8 +18,7 @@ namespace ConsoleApplication1
 
         private static void Backtracking(int number, int[,] checkerboard)
         {
-           
-
+            
             if (number > 0)
             {
                 for (var i = 0; i < checkerboard.GetLength(0); i++)
