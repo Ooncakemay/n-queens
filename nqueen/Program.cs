@@ -53,23 +53,23 @@ namespace ConsoleApplication1
             SetConflict(col, row, conflictMap, 1);
         }
 
-        private static void SetConflict(int col, int row, int[,] conflictMap, int addVlue)
+        private static void SetConflict(int col, int row, int[,] conflictMap, int addValue)
         {
             var length = conflictMap.GetLength(0);
 
             for (int i = row; i >= 0; i--)
             {
-                conflictMap[col, i] += addVlue;
+                conflictMap[col, i] += addValue;
             }
 
             for (int i = col + 1, j = row - 1; i < length && j >= 0; i++, j--)
             {
-                conflictMap[i, j] += addVlue;
+                conflictMap[i, j] += addValue;
             }
 
             for (int i = col - 1, j = row - 1; i >= 0 && j >= 0; i--, j--)
             {
-                conflictMap[i, j] += addVlue;
+                conflictMap[i, j] += addValue;
             }
         }
 
