@@ -8,7 +8,7 @@ namespace ConsoleApplication1
 
         public static void Main(string[] args)
         {
-            const int number = 4;
+            const int number = 8;
 
             var array = new int[number, number];
             Backtracking(number, array);
@@ -25,7 +25,6 @@ namespace ConsoleApplication1
                 {
                     if (ForwardChecking(i, number - 1, checkerboard))
                     {
-                        
                         checkerboard[i, number - 1] = 1;
                         Backtracking(number - 1, checkerboard);
                         checkerboard[i, number - 1] = 0;
@@ -72,7 +71,7 @@ namespace ConsoleApplication1
             for (s = i + 1, t = j - 1; s < length && t >= 0; s++, t--)
                 if (checkerboard[s, t] == 1)
                     return false; //判斷左下方
-            return true; //否則返回
+            return true; 
         }
     }
 }
