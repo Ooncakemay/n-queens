@@ -2,8 +2,6 @@
 
 namespace ConsoleApplication1
 {
-
-    
     internal class Program
     {
         private static int _count = 0;
@@ -13,51 +11,49 @@ namespace ConsoleApplication1
             const int number = 8;
             var conflictMap = new int[number, number];
             var array = new int[number, number];
-            NQueen(number, array,conflictMap);
+            NQueen(number, array, conflictMap);
         }
 
 
-        private static void NQueen(int number, int[,] checkerboard,int [,] conflictMap )
+        private static void NQueen(int number, int[,] checkerboard, int[,] conflictMap)
         {
-            
             if (number > 0)
             {
                 for (var i = 0; i < checkerboard.GetLength(0); i++)
                 {
-                    if (IsCorrect(i,number-1 , conflictMap))
+                    if (IsCorrect(i, number - 1, conflictMap))
                     {
-                        PlaceQueen(i,number-1,checkerboard,conflictMap);
-                        NQueen(number - 1, checkerboard,conflictMap);
-                        RemoveQueen(i, number-1, checkerboard,conflictMap);
+                        PlaceQueen(i, number - 1, checkerboard, conflictMap);
+                        NQueen(number - 1, checkerboard, conflictMap);
+                        RemoveQueen(i, number - 1, checkerboard, conflictMap);
                     }
                 }
             }
             else
             {
                 _count++;
-                PrintBoard(checkerboard,_count);
+                PrintBoard(checkerboard, _count);
             }
         }
 
-        private static void RemoveQueen(int col, int row, int[,] checkerboard,int [,] conflictMap)
+        private static void RemoveQueen(int col, int row, int[,] checkerboard, int[,] conflictMap)
         {
             checkerboard[col, row] = 0;
 
-            SetConflict(col, row, conflictMap,-1);
+            SetConflict(col, row, conflictMap, -1);
         }
 
-        
-        private static void PlaceQueen(int col, int row, int[,] checkerboard,int [,] conflictMap)
+
+        private static void PlaceQueen(int col, int row, int[,] checkerboard, int[,] conflictMap)
         {
-          
             checkerboard[col, row] = 1;
-            
+
             var length = checkerboard.GetLength(0);
-            
-            SetConflict(col, row, conflictMap,1);
+
+            SetConflict(col, row, conflictMap, 1);
         }
-        
-        private static void SetConflict(int col, int row, int[,] conflictMap,int addVlue)
+
+        private static void SetConflict(int col, int row, int[,] conflictMap, int addVlue)
         {
             var length = conflictMap.GetLength(0);
 
@@ -66,18 +62,18 @@ namespace ConsoleApplication1
                 conflictMap[col, i] += addVlue;
             }
 
-            for (int i = col + 1, j = row - 1; i < length && j >= 0; i++, j--) 
+            for (int i = col + 1, j = row - 1; i < length && j >= 0; i++, j--)
             {
-                conflictMap[i, j]+= addVlue;
+                conflictMap[i, j] += addVlue;
             }
 
-            for (int i = col - 1, j = row - 1; i >= 0 && j >= 0; i--, j--) 
+            for (int i = col - 1, j = row - 1; i >= 0 && j >= 0; i--, j--)
             {
-                conflictMap[i, j]+= addVlue;
+                conflictMap[i, j] += addVlue;
             }
         }
 
-        private static void PrintBoard(int[,] checkerboard,int count)
+        private static void PrintBoard(int[,] checkerboard, int count)
         {
             Console.WriteLine("//Solution " + count);
             for (var i = 0; i < checkerboard.GetLength(0); i++)
@@ -92,7 +88,7 @@ namespace ConsoleApplication1
 
             Console.WriteLine();
         }
-        
+
         /*
             01234567
          0  .....Q..
@@ -109,7 +105,5 @@ namespace ConsoleApplication1
         {
             return checkerboard[col, row] == 0;
         }
-       
-        
     }
 }
