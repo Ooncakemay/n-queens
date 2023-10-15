@@ -2,6 +2,8 @@
 
 namespace ConsoleApplication1
 {
+
+    
     internal class Program
     {
         private static int _count = 0;
@@ -9,7 +11,6 @@ namespace ConsoleApplication1
         public static void Main(string[] args)
         {
             const int number = 8;
-
             var array = new int[number, number];
             Backtracking(number, array);
         }
@@ -23,7 +24,7 @@ namespace ConsoleApplication1
             {
                 for (var i = 0; i < length; i++)
                 {
-                    if (ForwardChecking(i, number - 1, checkerboard))
+                    if (ForwardChecking(i, number-1, checkerboard))
                     {
                         checkerboard[i, number - 1] = 1;
                         Backtracking(number - 1, checkerboard);
@@ -34,44 +35,60 @@ namespace ConsoleApplication1
             else
             {
                 _count++;
-                Console.WriteLine("//Solution " + _count );
-                for (var i = 0; i < length; i++)
-                {
-                    for (var j = 0; j < length; j++)
-                    {
-                        Console.Write(checkerboard[i, j] == 0 ? "." : "Q");
-                    }
+                PrintBoard(checkerboard, length,_count);
+            }
+        }
 
-                    Console.WriteLine();
+        private static void PrintBoard(int[,] checkerboard, int length,int count)
+        {
+            Console.WriteLine("//Solution " + count);
+            for (var i = 0; i < length; i++)
+            {
+                for (var j = 0; j < length; j++)
+                {
+                    Console.Write(checkerboard[i, j] == 0 ? "." : "Q");
                 }
 
                 Console.WriteLine();
             }
-        }
 
-        private static bool ForwardChecking(int i, int j, int[,] checkerboard)
+            Console.WriteLine();
+        }
+        
+        /*
+            01234567
+         0  .....Q..
+         1  ..Q.....
+         2  ....Q...
+         3  ......Q.
+         4  Q.......
+         5  ...Q....
+         6  .Q......
+         7  .......Q
+        */
+
+        private static bool ForwardChecking(int col, int row, int[,] checkerboard)
         {
             var length = checkerboard.GetLength(0);
-            int s, t;
-            for (s = i, t = 0; t < length; t++)
-                if (checkerboard[s, t] == 1 && t != j)
-                    return false; //判斷行
-            for (t = j, s = 0; s < length; s++)
-                if (checkerboard[s, t] == 1 && s != i)
-                    return false; //判斷列
-            for (s = i - 1, t = j - 1; s >= 0 && t >= 0; s--, t--)
-                if (checkerboard[s, t] == 1)
-                    return false; //判斷左上方
-            for (s = i + 1, t = j + 1; s < length && t < length; s++, t++)
-                if (checkerboard[s, t] == 1)
-                    return false; //判斷右下方
-            for (s = i - 1, t = j + 1; s >= 0 && t < length; s--, t++)
-                if (checkerboard[s, t] == 1)
-                    return false; //判斷右上方
-            for (s = i + 1, t = j - 1; s < length && t >= 0; s++, t--)
-                if (checkerboard[s, t] == 1)
-                    return false; //判斷左下方
-            return true; 
+            for (int i = row; i < length; i++)
+            {
+                if (checkerboard[col, i] == 1)
+                    return false;
+            }
+            
+            for (int i = col, j = row; i >=0  && j < length; i--, j++)
+            {
+                if (checkerboard[i, j] == 1)
+                    return false;
+            }
+            
+            for (int i = col, j = row; i < length && j < length; i++, j++)
+            {
+                if (checkerboard[i, j] == 1)
+                    return false;
+            }
+
+            return true;
         }
     }
 }
