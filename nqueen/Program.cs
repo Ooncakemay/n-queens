@@ -12,21 +12,21 @@ namespace ConsoleApplication1
         {
             const int number = 8;
             var array = new int[number, number];
-            Backtracking(number, array);
+            NQueen(number, array);
         }
 
 
-        private static void Backtracking(int number, int[,] checkerboard)
+        private static void NQueen(int number, int[,] checkerboard)
         {
             
             if (number > 0)
             {
                 for (var i = 0; i < checkerboard.GetLength(0); i++)
                 {
-                    if (ForwardChecking(i, number-1, checkerboard))
+                    if (isCorrect(i, number-1, checkerboard))
                     {
                         checkerboard[i, number - 1] = 1;
-                        Backtracking(number - 1, checkerboard);
+                        NQueen(number - 1, checkerboard);
                         checkerboard[i, number - 1] = 0;
                     }
                 }
@@ -66,7 +66,7 @@ namespace ConsoleApplication1
          7  .......Q
         */
 
-        private static bool ForwardChecking(int col, int row, int[,] checkerboard)
+        private static bool isCorrect(int col, int row, int[,] checkerboard)
         {
             var length = checkerboard.GetLength(0);
             for (int i = row; i < length; i++)
