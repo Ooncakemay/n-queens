@@ -18,11 +18,11 @@ namespace ConsoleApplication1
 
         private static void Backtracking(int number, int[,] checkerboard)
         {
-            var length = checkerboard.GetLength(0);
+           
 
             if (number > 0)
             {
-                for (var i = 0; i < length; i++)
+                for (var i = 0; i < checkerboard.GetLength(0); i++)
                 {
                     if (ForwardChecking(i, number-1, checkerboard))
                     {
@@ -35,16 +35,16 @@ namespace ConsoleApplication1
             else
             {
                 _count++;
-                PrintBoard(checkerboard, length,_count);
+                PrintBoard(checkerboard,_count);
             }
         }
 
-        private static void PrintBoard(int[,] checkerboard, int length,int count)
+        private static void PrintBoard(int[,] checkerboard,int count)
         {
             Console.WriteLine("//Solution " + count);
-            for (var i = 0; i < length; i++)
+            for (var i = 0; i < checkerboard.GetLength(0); i++)
             {
-                for (var j = 0; j < length; j++)
+                for (var j = 0; j < checkerboard.GetLength(1); j++)
                 {
                     Console.Write(checkerboard[i, j] == 0 ? "." : "Q");
                 }
