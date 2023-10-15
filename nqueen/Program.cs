@@ -23,7 +23,7 @@ namespace ConsoleApplication1
             {
                 for (var i = 0; i < checkerboard.GetLength(0); i++)
                 {
-                    if (isCorrect(i, number-1, checkerboard))
+                    if (IsCorrect(i, number-1, checkerboard))
                     {
                         checkerboard[i, number - 1] = 1;
                         NQueen(number - 1, checkerboard);
@@ -66,7 +66,7 @@ namespace ConsoleApplication1
          7  .......Q
         */
 
-        private static bool isCorrect(int col, int row, int[,] checkerboard)
+        private static bool IsCorrect(int col, int row, int[,] checkerboard)
         {
             var length = checkerboard.GetLength(0);
             for (int i = row; i < length; i++)
